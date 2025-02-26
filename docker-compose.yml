@@ -1,0 +1,23 @@
+#version: "3.4"  
+
+services:  
+  app:  
+    image: ghcr.io/hargata/lubelogger:latest  
+    build: .  
+    restart: unless-stopped  
+    volumes:  
+      - data:/App/data  
+      - keys:/root/.aspnet/DataProtection-Keys  
+      #- ./https/:/https:ro -- https://localhost:443
+      - /home/codespace/lubelog/localhost.pfx:/https/localhost.pfx 
+      #- /home/codespace/localhost.pfx:/https/localhost.pfx    #./localhost.pfx:/https/localhost.pfx  # Montez le certificat dans le conteneur pour qu'il soit accessible  
+    ports:  
+      - 443:443  
+    env_file:  
+      - .env  
+
+volumes:  
+  data:  
+  keys:
+
+
